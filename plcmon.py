@@ -25,6 +25,6 @@ if __name__ == "__main__":
     (options, args) = parser.parse_args()
     print "[+] Enabling sniff mode"
     pkt = Ether(src=options.sourcemac)/HomePlugAV()/SnifferRequest(SnifferControl=1) # We enable Sniff mode here
-    sendp(pkt, iface=options.iface)
+    sendp(pkt, iface=options.iface, verbose=False)
     print "[+] Listening for CCo station..."
     sniff(prn=appendindic, lfilter=lambda pkt:pkt.haslayer(HomePlugAV)) # capture the signal
