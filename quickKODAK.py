@@ -44,6 +44,4 @@ if __name__ == "__main__":
         DAKpass = keygen.generate()
         pbkdf1 = PBKDF1(DAKpass, DAK_SALT, 16, hashlib.sha256())    
         pkt = Ether(src=options.sourcemac)/HomePlugAV()/SetEncryptionKeyRequest(NMK=options.nmk, EKS=1, DAK=binascii.unhexlify(pbkdf1))
-        ret = srp(pkt, iface=options.iface,verbose=False)
-	print ret[0][0][0].show()
-	print ret[0][0][1].show()
+        sendp(pkt, iface=options.iface,verbose=False)
