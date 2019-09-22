@@ -7,7 +7,7 @@ from layerscapy.HomePlugAV import *
 from optparse import OptionParser
 
 """
-    Copyright (C) NMK Bruteforcer tool by julioxus and aespinosa
+    Copyright (C) NMK setter for local device without DAK tool by julioxus and aespinosa
 """
 
 dictio = {}
