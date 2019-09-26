@@ -33,15 +33,13 @@ if __name__ == "__main__":
     parser.add_option("-k", "--key", dest="nmk", default="\x00"*16,
         help="NMK key to configure", metavar="NMK")
 
-
-
     (options, args) = parser.parse_args()
     if not options.localdevice:   # if localdevice is not given
-        parser.error('Attacker MAC address not given')
+        parser.error('Local Device MAC address not given')
 
     # Set NMK to attacker device
     zeroDAK = "\x00"*16
-    pkt = Ether(dst=options.localdevice)/HomePlugAV()/SetEncryptionKeyRequest(NMK=options.nmk, EKS=1, DAK=options.nmk, DestinationMAC=options.localdevice,PayloadEncKeySelect=0x0f)
+    pkt = Ether(dst=options.localdevice)/HomePlugAV()/SetEncryptionKeyRequest(NMK=options.nmk, EKS=1, DAK=zeroDAK, DestinationMAC=options.localdevice,PayloadEncKeySelect=0x0f)
     ans = srp1(pkt, iface=options.iface,verbose=False,timeout=5)
     if ans is None:
         print "Packet sent with no answer..."
