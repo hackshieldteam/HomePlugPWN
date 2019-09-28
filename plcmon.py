@@ -9,11 +9,14 @@ from genDAK import *
 dictio = {}
 
 def appendindic(pkt):
-    macad = iter(binascii.hexlify(pkt.load[0xe:0xe+6]))
-    macad = ':'.join(a+b for a,b in zip(macad, macad))
-    if macad not in dictio.keys() and macad != "00:00:00:00:00:00":
-        dictio[macad] = DAKgen(macad).generate()
-        print "\t Found CCo: %s (DAK: %s)" % (macad, dictio[macad]) 
+    try:
+        macad = iter(binascii.hexlify(pkt.load[0xe:0xe+6]))
+        macad = ':'.join(a+b for a,b in zip(macad, macad))
+        if macad not in dictio.keys() and macad != "00:00:00:00:00:00":
+            dictio[macad] = DAKgen(macad).generate()
+            print "\t Found CCo: %s (DAK: %s)" % (macad, dictio[macad])
+    except:
+        None
 
 if __name__ == "__main__":
     usage = "usage: %prog [options] arg"
