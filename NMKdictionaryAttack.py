@@ -5,9 +5,6 @@ from layerscapy.HomePlugAV import *
 from optparse import OptionParser
 from PBKDF1 import *
 import time
-from termcolor import colored
-
-
 
 def checkAVLN(interface, mac):
     # Building packet
