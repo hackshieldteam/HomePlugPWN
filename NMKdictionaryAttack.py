@@ -67,7 +67,7 @@ if __name__ == "__main__":
 
     try:
         f = open(options.dict, 'r')
-    except(IOError):
+    except:
         print("[!] Error reading dictionary file. Does the file exist?")
         exit()
 
