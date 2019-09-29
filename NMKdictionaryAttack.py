@@ -22,7 +22,6 @@ def checkAVLN(interface, mac):
 
     return False
 
-
 def networkName2NMK(networkName):
     pbkdf1 = PBKDF1(networkName, NMK_SALT, 16, hashlib.sha256())
     return binascii.unhexlify(pbkdf1)
@@ -67,10 +66,12 @@ if __name__ == "__main__":
     ####    Attack   ####
 
     try:
-        dict = [line.rstrip('\n') for line in open(options.dict, 'r')]
+        f = open(options.dict, 'r')
     except(IOError):
         print("[!] Error reading dictionary file. Does the file exist?")
         exit()
+
+    dict = [line.rstrip('\n') for line in f]
 
     print("[*] Dictionary file read. There are " + str(len(dict)) + " network names to be tried.")
     print("[*] MAC of local PLC: " + options.mac)
